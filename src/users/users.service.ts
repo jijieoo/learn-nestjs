@@ -7,15 +7,19 @@ import { User } from './user.entity';
 export class UsersService {
     constructor(
         @InjectRepository(User)
-        private usersRepository: Repository<User>
+        private usersRepository: Repository<User>,
     ) {}
 
     findAll(): Promise<User[]> {
         return this.usersRepository.find();
     }
 
+    findByUsername(username: string): Promise<User> {
+        return this.usersRepository.findOne({ username });
+    }
+
     findOne(id: number): Promise<User> {
-        return this.usersRepository.findOne(id)
+        return this.usersRepository.findOne(id);
     }
 
     async remove(id: string): Promise<void> {
