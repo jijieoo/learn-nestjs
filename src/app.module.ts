@@ -1,11 +1,11 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { HeroesModule } from './modules/heroes/heroes.module';
 
 @Module({
     imports: [
@@ -21,15 +21,10 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
         }),
         UsersModule,
         AuthModule,
+        HeroesModule,
     ],
     controllers: [AppController],
-    providers: [
-        AppService,
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: ClassSerializerInterceptor,
-        },
-    ],
+    providers: [AppService],
 })
 export class AppModule {
     constructor(private connection: Connection) {}
