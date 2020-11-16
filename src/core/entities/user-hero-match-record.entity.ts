@@ -21,6 +21,13 @@ export class UserHeroMatchRecord {
     })
     camp: number;
 
+    @Column({
+        type: 'tinyint',
+        comment: '1: carry, 2: solo, 3: offline, 4: support, 5: hard-support',
+        nullable: false,
+    })
+    position: number;
+
     @ManyToOne(
         () => User,
         user => user.match_records,
