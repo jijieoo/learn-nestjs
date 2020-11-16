@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { UserHeroMatchRecord } from './user-hero-match-record.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Hero {
@@ -7,7 +16,20 @@ export class Hero {
 
     @Column({
         nullable: false,
-        default: ''
+        default: '',
     })
     hero_name: string;
+
+    @ManyToOne(
+        () => User,
+        user => user.heroes,
+    )
+    @JoinColumn({ name: 'user_id' })
+    user: User;
+
+    @OneToMany(
+        () => UserHeroMatchRecord,
+        record => record.hero,
+    )
+    match_records: UserHeroMatchRecord;
 }

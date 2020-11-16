@@ -6,6 +6,9 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { HeroesModule } from './modules/heroes/heroes.module';
+import { MatchesModule } from './modules/matches/matches.module';
+import { UserHeroMatchRecordsService } from './user-hero-match-records/user-hero-match-records.service';
+import { UserHeroMatchRecordsModule } from './user-hero-match-records/user-hero-match-records.module';
 
 @Module({
     imports: [
@@ -22,9 +25,11 @@ import { HeroesModule } from './modules/heroes/heroes.module';
         UsersModule,
         AuthModule,
         HeroesModule,
+        MatchesModule,
+        UserHeroMatchRecordsModule,
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService, UserHeroMatchRecordsService],
 })
 export class AppModule {
     constructor(private connection: Connection) {}

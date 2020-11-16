@@ -1,8 +1,16 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import {
+    ClassSerializerInterceptor,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    UseInterceptors,
+} from '@nestjs/common';
 import { User } from '../../core/entities/user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
