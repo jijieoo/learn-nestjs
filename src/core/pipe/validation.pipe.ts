@@ -18,7 +18,9 @@ export class ValidationPipe implements PipeTransform<any> {
         const object = plainToClass(metatype, value);
         const errors = await validate(object);
         if (errors.length > 0) {
-            throw new BadRequestException('Validation failed');
+            throw new BadRequestException(
+                errors.map(error => error.toString()),
+            );
         }
         return value;
     }

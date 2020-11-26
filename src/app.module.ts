@@ -7,7 +7,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { HeroesModule } from './modules/heroes/heroes.module';
 import { MatchesModule } from './modules/matches/matches.module';
-import { TransactionsModule } from './modules/transactions/transactions.module';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
     imports: [
@@ -25,7 +25,7 @@ import { TransactionsModule } from './modules/transactions/transactions.module';
         AuthModule,
         HeroesModule,
         MatchesModule,
-        TransactionsModule,
+        OrdersModule,
     ],
     controllers: [AppController],
     providers: [AppService],

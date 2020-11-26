@@ -2,7 +2,7 @@ import { Exclude } from 'class-transformer';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Hero } from './hero.entity';
 import { UserHeroMatchRecord } from './user-hero-match-record.entity';
-import { UserHeroTransaction } from './user-hero-transaction.entity';
+import { Order } from './order.entity';
 
 @Entity()
 export class User {
@@ -22,6 +22,21 @@ export class User {
     @Exclude()
     password: string;
 
+    @Column({
+        type: 'int',
+        nullable: false,
+        default: 5,
+    })
+    balance: number;
+
+    @Column({
+        type: 'tinyint',
+        nullable: false,
+        default: 1,
+        comment: '0: 管理员, 1: 选手',
+    })
+    role: number;
+
     @OneToMany(
         () => Hero,
         hero => hero.user,
@@ -35,14 +50,14 @@ export class User {
     match_records: UserHeroMatchRecord;
 
     @OneToMany(
-        () => UserHeroTransaction,
+        () => Order,
         transaction => transaction.buyer,
     )
-    buy_records: UserHeroTransaction[];
+    buy_records: Order[];
 
     @OneToMany(
-        () => UserHeroTransaction,
+        () => Order,
         transaction => transaction.seller,
     )
-    sell_records: UserHeroTransaction[];
+    sell_records: Order[];
 }

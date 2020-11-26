@@ -1,4 +1,4 @@
-INSERT INTO user_hero_transaction (price, seller_id, buyer_id, hero_id)
+INSERT INTO test.order (price, seller_id, buyer_id, hero_id)
 VALUES
 (1, 11, 1, 1),
 (1, 11, 1, 11),

@@ -9,7 +9,7 @@ import { Hero } from './hero.entity';
 import { User } from './user.entity';
 
 @Entity()
-export class UserHeroTransaction {
+export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -39,5 +39,5 @@ export class UserHeroTransaction {
         hero => hero.transactions,
     )
     @JoinColumn({ name: 'hero_id' })
-    hero: User;
+    hero: Hero;
 }
