@@ -1,5 +1,6 @@
 INSERT INTO user (username, password)
 VALUES
+('AMS', '123'),
 ('YYF', '123'),
 ('longdd', '123'),
 ('DD', '123'),

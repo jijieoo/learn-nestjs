@@ -7,6 +7,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserHeroMatchRecord } from './user-hero-match-record.entity';
+import { UserHeroTransaction } from './user-hero-transaction.entity';
 import { User } from './user.entity';
 
 @Entity()
@@ -32,4 +33,10 @@ export class Hero {
         record => record.hero,
     )
     match_records: UserHeroMatchRecord;
+
+    @OneToMany(
+        () => UserHeroTransaction,
+        transaction => transaction.hero,
+    )
+    transactions: UserHeroTransaction[];
 }

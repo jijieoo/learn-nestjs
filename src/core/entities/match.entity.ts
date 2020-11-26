@@ -1,12 +1,5 @@
 import { Expose } from 'class-transformer';
-import dayjs from 'dayjs';
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    OneToMany,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserHeroMatchRecord } from './user-hero-match-record.entity';
 
 @Entity()
@@ -14,17 +7,23 @@ export class Match {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @CreateDateColumn()
-    start_time: Date;
+    @Column({
+        type: 'bigint',
+        default: new Date().getTime(),
+        nullable: false,
+    })
+    start_time: number;
 
-    @CreateDateColumn()
-    end_time: Date;
+    @Column({
+        type: 'bigint',
+        default: new Date().getTime(),
+        nullable: false,
+    })
+    end_time: number;
 
     @Expose()
     get duration(): number {
-        return (
-            dayjs(this.end_time).valueOf() - dayjs(this.start_time).valueOf()
-        );
+        return this.end_time - this.start_time;
     }
 
     @Column({
@@ -33,6 +32,11 @@ export class Match {
         nullable: true,
     })
     winner_side: number;
+
+    @Column({
+        type: 'int',
+    })
+    games: number;
 
     @OneToMany(
         () => UserHeroMatchRecord,
