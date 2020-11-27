@@ -10,7 +10,7 @@ import { CreateOrderDto } from 'src/core/dtos/order/create-order.dto';
 import { Order } from 'src/core/entities/order.entity';
 import { OrdersService } from './orders.service';
 
-@Controller('user-hero-transactions')
+@Controller('orders')
 @UseInterceptors(ClassSerializerInterceptor)
 export class OrdersController {
     constructor(private ordersService: OrdersService) {}

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrderDto } from 'src/core/dtos/order/create-order.dto';
 import { Order } from 'src/core/entities/order.entity';
@@ -24,16 +24,28 @@ export class OrdersService {
      * @param {CreateOrderDto} createOrderDto 交易记录
      */
     async create(createOrderDto: CreateOrderDto): Promise<Order> {
-        const order = await this.ordersRepository.save(createOrderDto);
-
-        await this.usersService.buyHero(
-            order.id,
+        const isEnough = await this.usersService.checkUserBalanceIsEnough(
             createOrderDto.buyer_id,
-            createOrderDto.hero_id,
+            createOrderDto.price,
         );
+        if (isEnough) {
+            const order = await this.ordersRepository.save(createOrderDto);
 
-        await this.usersService.sellHero(order.id, createOrderDto.seller_id);
+            await this.usersService.buyHero(
+                order.id,
+                createOrderDto.buyer_id,
+                createOrderDto.hero_id,
+                createOrderDto.price,
+            );
 
-        return order;
+            await this.usersService.sellHero(
+                order.id,
+                createOrderDto.seller_id,
+                createOrderDto.price,
+            );
+            return order;
+        } else {
+            throw new HttpException('user balance is not enough', 200);
+        }
     }
 }

@@ -47,9 +47,11 @@ export class UsersService {
         orderId: number,
         userId: number,
         heroId: number,
+        heroPrice: number,
     ): Promise<void> {
         // TODO: 添加身份判断，选手才可以买
 
+        // 更新关联信息
         await this.usersRepository
             .createQueryBuilder()
             .relation(Order, 'buyer')
@@ -67,6 +69,16 @@ export class UsersService {
             .relation(User, 'heroes')
             .of(userId)
             .add(heroId);
+
+        // 更新用户余额
+        await this.usersRepository
+            .createQueryBuilder()
+            .update(User)
+            .set({
+                balance: () => `balance - ${heroPrice}`,
+            })
+            .where('id = :id', { id: userId })
+            .execute();
     }
 
     /**
@@ -74,11 +86,48 @@ export class UsersService {
      * @param userId 用户ID
      * @param orderId 订单ID
      */
-    async sellHero(orderId: number, userId: number): Promise<void> {
+    async sellHero(
+        orderId: number,
+        userId: number,
+        heroPrice: number,
+    ): Promise<void> {
+        // 跟新关联表信息
         await this.usersRepository
             .createQueryBuilder()
             .relation(Order, 'seller')
             .of(orderId)
             .set(userId);
+
+        // 更新用户余额
+        await this.usersRepository
+            .createQueryBuilder()
+            .update(User)
+            .set({
+                balance: () => `balance + ${heroPrice}`,
+            })
+            .where('id = :id', { id: userId })
+            .execute();
+    }
+
+    /**
+     * 查询用户余额
+     * @param userId 用户ID
+     */
+    async checkUserBalance(userId: number): Promise<number> {
+        const user = await this.usersRepository.findOne(userId);
+        return user.balance;
+    }
+
+    /**
+     * 查询用户余额是否可以购买英雄
+     * @param userId 用户ID
+     * @param heroPrice 要购买的英雄价格
+     */
+    async checkUserBalanceIsEnough(
+        userId: number,
+        heroPrice: number,
+    ): Promise<boolean> {
+        const userBalance = await this.checkUserBalance(userId);
+        return userBalance >= heroPrice;
     }
 }
