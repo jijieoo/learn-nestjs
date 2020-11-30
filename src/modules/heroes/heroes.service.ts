@@ -12,7 +12,9 @@ export class HeroesService {
     ) {}
 
     findAll(): Promise<Hero[]> {
-        return this.heroesRepository.find();
+        return this.heroesRepository.find({
+            relations: ['user'],
+        });
     }
 
     update(updateHeroDto: UpdateHeroDto): Promise<Hero> {
@@ -24,6 +26,6 @@ export class HeroesService {
     }
 
     findById(id: number): Promise<Hero> {
-        return this.heroesRepository.findOne(id);
+        return this.heroesRepository.findOne(id, { relations: ['user'] });
     }
 }

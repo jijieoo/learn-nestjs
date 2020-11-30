@@ -1,7 +1,6 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import { DataFormatInterceptor } from './core/dtos/interceptors/data-format.interceptor';
 import { AllExpectionsFilter } from './core/filter/all-expections.filter';
 import { logger } from './core/middleware/logger.middleware';
 import { ValidationPipe } from './core/pipe/validation.pipe';
@@ -9,7 +8,7 @@ import { ValidationPipe } from './core/pipe/validation.pipe';
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-    app.useGlobalInterceptors(new DataFormatInterceptor());
+    // app.useGlobalInterceptors(new DataFormatInterceptor());
 
     // 全局参数校验 pipe
     app.useGlobalPipes(new ValidationPipe());

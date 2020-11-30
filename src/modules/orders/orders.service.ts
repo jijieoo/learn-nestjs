@@ -1,6 +1,8 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrderDto } from 'src/core/dtos/order/create-order.dto';
+import { FindOrderDto } from 'src/core/dtos/order/find-order.dto';
+import { PaginationResponseDto } from 'src/core/dtos/pagination/pagination-response.dto';
 import { Order } from 'src/core/entities/order.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from '../users/users.service';
@@ -13,10 +15,35 @@ export class OrdersService {
         private usersService: UsersService,
     ) {}
 
-    findAll(): Promise<Order[]> {
-        return this.ordersRepository.find({
+    /**
+     * 分页查询
+     * @param findOrderDto 分页信息
+     */
+    async findAll(findOrderDto: FindOrderDto): Promise<PaginationResponseDto> {
+        const currentPage = findOrderDto.currentPage
+            ? findOrderDto.currentPage
+            : 1;
+        const pageSize = findOrderDto.pageSize ? findOrderDto.pageSize : 50;
+
+        const skip = (currentPage - 1) * pageSize;
+
+        const findAndCount = await this.ordersRepository.findAndCount({
             relations: ['seller', 'buyer', 'hero', 'hero.user'],
+            skip,
+            take: pageSize,
+            where: {
+                buyer: {},
+            },
         });
+
+        const result = new PaginationResponseDto(
+            currentPage,
+            pageSize,
+            findAndCount[1],
+            findAndCount[0],
+        );
+
+        return result;
     }
 
     /**
@@ -24,11 +51,12 @@ export class OrdersService {
      * @param {CreateOrderDto} createOrderDto 交易记录
      */
     async create(createOrderDto: CreateOrderDto): Promise<Order> {
-        const isEnough = await this.usersService.checkUserBalanceIsEnough(
-            createOrderDto.buyer_id,
-            createOrderDto.price,
-        );
-        if (isEnough) {
+        try {
+            await this.usersService.checkUserBalanceIsEnough(
+                createOrderDto.buyer_id,
+                createOrderDto.price,
+            );
+
             const order = await this.ordersRepository.save(createOrderDto);
 
             await this.usersService.buyHero(
@@ -44,8 +72,8 @@ export class OrdersService {
                 createOrderDto.price,
             );
             return order;
-        } else {
-            throw new HttpException('user balance is not enough', 200);
+        } catch (err) {
+            throw err;
         }
     }
 }

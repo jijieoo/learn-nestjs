@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from 'src/core/dtos/user/create-user.dto';
 import { Order } from 'src/core/entities/order.entity';
@@ -14,7 +14,12 @@ export class UsersService {
 
     findAll(): Promise<User[]> {
         return this.usersRepository.find({
-            relations: ['heroes', 'match_records', 'buy_records'],
+            relations: [
+                'heroes',
+                'match_records',
+                'sell_records',
+                'buy_records',
+            ],
         });
     }
 
@@ -128,6 +133,12 @@ export class UsersService {
         heroPrice: number,
     ): Promise<boolean> {
         const userBalance = await this.checkUserBalance(userId);
-        return userBalance >= heroPrice;
+        if (userBalance < heroPrice) {
+            throw new HttpException(
+                'user balance not enough',
+                HttpStatus.EXPECTATION_FAILED,
+            );
+        }
+        return true;
     }
 }
