@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { HeroesModule } from './modules/heroes/heroes.module';
 import { MatchesModule } from './modules/matches/matches.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { RankingModule } from './modules/ranking/ranking.module';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { OrdersModule } from './modules/orders/orders.module';
         HeroesModule,
         MatchesModule,
         OrdersModule,
+        RankingModule,
     ],
     controllers: [AppController],
     providers: [AppService],
