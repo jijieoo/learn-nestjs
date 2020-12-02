@@ -1,12 +1,20 @@
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
+import * as dayjs from 'dayjs';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserHeroMatchRecord } from './user-hero-match-record.entity';
+import { CAMP } from '../constants/camp.constant';
+import { MatchRecord } from './match-record.entity';
 
 @Entity()
 export class Match {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Expose()
+    get start(): string {
+        return dayjs(this.start_time).format('YYYY-MM-DD HH:mm');
+    }
+
+    @Exclude()
     @Column({
         type: 'bigint',
         default: new Date().getTime(),
@@ -14,6 +22,7 @@ export class Match {
     })
     start_time: number;
 
+    @Exclude()
     @Column({
         type: 'bigint',
         default: new Date().getTime(),
@@ -21,9 +30,24 @@ export class Match {
     })
     end_time: number;
 
+    /** 时长 */
     @Expose()
     get duration(): number {
         return this.end_time - this.start_time;
+    }
+
+    /** 天辉 */
+    @Expose()
+    get radiant_records(): MatchRecord[] {
+        return this.match_records.filter(
+            record => record.camp === CAMP.RADIANT,
+        );
+    }
+
+    /** 夜魇 */
+    @Expose()
+    get dire_records(): MatchRecord[] {
+        return this.match_records.filter(record => record.camp === CAMP.DIRE);
     }
 
     @Column({
@@ -38,9 +62,10 @@ export class Match {
     })
     games: number;
 
+    @Exclude()
     @OneToMany(
-        () => UserHeroMatchRecord,
+        () => MatchRecord,
         record => record.match,
     )
-    match_records: UserHeroMatchRecord;
+    match_records: MatchRecord[];
 }

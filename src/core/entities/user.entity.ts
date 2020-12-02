@@ -1,7 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Hero } from './hero.entity';
-import { UserHeroMatchRecord } from './user-hero-match-record.entity';
+import { MatchRecord } from './match-record.entity';
 import { Order } from './order.entity';
 
 @Entity()
@@ -44,10 +44,10 @@ export class User {
     heroes: Hero[];
 
     @OneToMany(
-        () => UserHeroMatchRecord,
+        () => MatchRecord,
         record => record.user,
     )
-    match_records: UserHeroMatchRecord;
+    match_records: MatchRecord;
 
     @OneToMany(
         () => Order,

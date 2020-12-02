@@ -10,7 +10,7 @@ import { Match } from './match.entity';
 import { User } from './user.entity';
 
 @Entity()
-export class UserHeroMatchRecord {
+export class MatchRecord {
     @PrimaryGeneratedColumn()
     id: number;
 

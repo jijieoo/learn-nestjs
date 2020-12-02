@@ -1,4 +1,4 @@
-INSERT INTO user_hero_match_record (user_id, hero_id, match_id, camp, position)
+INSERT INTO match_record (user_id, hero_id, match_id, camp, position)
 VALUES
 (1, 1, 1, 0, 4),
 (2, 2, 1, 0, 2),

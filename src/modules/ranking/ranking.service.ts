@@ -22,13 +22,5 @@ export class RankingService {
                 balance: -1,
             },
         });
-        // return this.userRepository
-        //     .createQueryBuilder('user')
-        //     .select('user.id')
-        //     .addSelect('user.username')
-        //     .addSelect('user.balance')
-        //     .leftJoin('user.heroes', 'hero')
-        //     .where('user.role = :role', { role: 1 })
-        //     .getMany();
     }
 }
