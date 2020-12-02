@@ -32,7 +32,7 @@ export class Hero {
         () => MatchRecord,
         record => record.hero,
     )
-    match_records: Order;
+    match_records: MatchRecord[];
 
     @OneToMany(
         () => Order,

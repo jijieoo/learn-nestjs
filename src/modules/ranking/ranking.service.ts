@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ROLE } from 'src/core/constants/role.constant';
+import { SORT } from 'src/core/constants/sort.constant';
 import { UserRankingDto } from 'src/core/dtos/ranking/user-ranking.dto';
 import { User } from 'src/core/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -16,10 +18,10 @@ export class RankingService {
             select: ['id', 'username', 'balance'],
             relations: ['heroes'],
             where: {
-                role: 1,
+                role: ROLE.PLAYER,
             },
             order: {
-                balance: -1,
+                balance: SORT.DESC,
             },
         });
     }

@@ -47,7 +47,7 @@ export class User {
         () => MatchRecord,
         record => record.user,
     )
-    match_records: MatchRecord;
+    match_records: MatchRecord[];
 
     @OneToMany(
         () => Order,

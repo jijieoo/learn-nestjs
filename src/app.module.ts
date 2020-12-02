@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { HeroesModule } from './modules/heroes/heroes.module';
-import { MatchesModule } from './modules/matches/matches.module';
+import { MatchRecordModule } from './modules/match-record/match-record.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { RankingModule } from './modules/ranking/ranking.module';
 
@@ -25,7 +25,7 @@ import { RankingModule } from './modules/ranking/ranking.module';
         UsersModule,
         AuthModule,
         HeroesModule,
-        MatchesModule,
+        MatchRecordModule,
         OrdersModule,
         RankingModule,
     ],

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SORT } from 'src/core/constants/sort.constant';
 import { Match } from 'src/core/entities/match.entity';
 import { Repository } from 'typeorm';
 
@@ -17,6 +18,9 @@ export class MatchesService {
                 'match_records.user',
                 'match_records.hero',
             ],
+            order: {
+                games: SORT.ASC,
+            },
         });
     }
 }
