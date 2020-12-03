@@ -58,15 +58,17 @@ export class Match {
     /** 天辉 */
     @Expose()
     get radiant_records(): MatchRecord[] {
-        return this.match_records.filter(
-            record => record.camp === CAMP.RADIANT,
-        );
+        return this.match_records
+            .filter(record => record.camp === CAMP.RADIANT)
+            .sort((a, b) => a.position - b.position);
     }
 
     /** 夜魇 */
     @Expose()
     get dire_records(): MatchRecord[] {
-        return this.match_records.filter(record => record.camp === CAMP.DIRE);
+        return this.match_records
+            .filter(record => record.camp === CAMP.DIRE)
+            .sort((a, b) => a.position - b.position);
     }
 
     /** 胜利方 */

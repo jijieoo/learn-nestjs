@@ -16,6 +16,8 @@ export class MatchRecordService {
                 'matches',
                 'matches.match_records',
                 'matches.match_records.user',
+                'matches.match_records.user.match_records',
+                'matches.match_records.user.match_records.match',
                 'matches.match_records.hero',
             ],
         });

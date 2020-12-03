@@ -15,8 +15,7 @@ export class RankingService {
 
     findAll(): Promise<UserRankingDto[]> {
         return this.userRepository.find({
-            select: ['id', 'username', 'balance'],
-            relations: ['heroes'],
+            relations: ['heroes', 'match_records', 'match_records.match'],
             where: {
                 role: ROLE.PLAYER,
             },

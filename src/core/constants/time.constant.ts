@@ -6,7 +6,7 @@ export enum TimeConstants {
     MILLISECONDS_PER_MINUTE = 60000,
 
     /** 时间格式化字符串 */
-    TIME_FORMAT = 'YYYY-MM-DD HH:mm',
+    TIME_FORMAT = 'HH:mm',
 
     /** 日期格式化字符串 */
     DATE_FORMAT = 'YYYY-MM-DD',

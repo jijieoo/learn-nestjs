@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Hero } from './hero.entity';
 import { MatchRecord } from './match-record.entity';
@@ -37,12 +37,30 @@ export class User {
     })
     role: number;
 
+    @Expose()
+    get total(): number {
+        return this.match_records.length;
+    }
+
+    @Expose()
+    get wins(): number {
+        return this.match_records.filter(
+            record => record.match.winner_side === record.camp,
+        ).length;
+    }
+
+    @Expose()
+    get losses(): number {
+        return this.total - this.wins;
+    }
+
     @OneToMany(
         () => Hero,
         hero => hero.user,
     )
     heroes: Hero[];
 
+    @Exclude()
     @OneToMany(
         () => MatchRecord,
         record => record.user,
