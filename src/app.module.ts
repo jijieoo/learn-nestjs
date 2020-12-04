@@ -9,6 +9,7 @@ import { HeroesModule } from './modules/heroes/heroes.module';
 import { MatchRecordModule } from './modules/match-record/match-record.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { RankingModule } from './modules/ranking/ranking.module';
+import { EventModule } from './events/events.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { RankingModule } from './modules/ranking/ranking.module';
         MatchRecordModule,
         OrdersModule,
         RankingModule,
+        EventModule,
     ],
     controllers: [AppController],
     providers: [AppService],

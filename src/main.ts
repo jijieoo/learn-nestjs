@@ -8,6 +8,8 @@ import { ValidationPipe } from './core/pipe/validation.pipe';
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+    // app.useWebSocketAdapter(new IoAdapter(app));
+
     // app.useGlobalInterceptors(new DataFormatInterceptor());
 
     // 全局参数校验 pipe
