@@ -1,5 +1,6 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { WsAdapter } from '@nestjs/platform-ws';
 import { AppModule } from './app.module';
 import { AllExpectionsFilter } from './core/filter/all-expections.filter';
 import { logger } from './core/middleware/logger.middleware';
@@ -8,7 +9,8 @@ import { ValidationPipe } from './core/pipe/validation.pipe';
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-    // app.useWebSocketAdapter(new IoAdapter(app));
+    // use ws adapter
+    app.useWebSocketAdapter(new WsAdapter(app));
 
     // app.useGlobalInterceptors(new DataFormatInterceptor());
 
