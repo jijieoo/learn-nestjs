@@ -10,6 +10,7 @@ import { MatchRecordModule } from './modules/match-record/match-record.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { RankingModule } from './modules/ranking/ranking.module';
 import { EventModule } from './events/events.module';
+import { TestUsersModule } from './modules/test-users/test-users.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { EventModule } from './events/events.module';
         OrdersModule,
         RankingModule,
         EventModule,
+        TestUsersModule,
     ],
     controllers: [AppController],
     providers: [AppService],
